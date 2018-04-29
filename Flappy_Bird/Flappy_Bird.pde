@@ -10,10 +10,15 @@ float y3 = 200;
 float h = 200;
 float birdYVelocity = 0;
 float gravity = 0.5;
+float xd = 300;
+float h2;
+float PipeHeight;
+float gap = random(100, 200);
 //1. Start a new sketch with draw and setup methods.
 void setup(){
   minim = new Minim (this);
 //sound = minim.loadSample("flap.mp3", 128);
+int screenLength = 600;
 size(1000, 600);
 }
 //2. Set your canvas size in the setup method
@@ -22,22 +27,23 @@ background(0, 0, 255);
 fill(255, 0, 0);
 ellipse(x, y, 40, 40);
 fill(0, 255, 0);
-rect(x2, y2, 200, h);
 x2=x2-11;
 birdYVelocity += gravity;
 y += birdYVelocity;
 fill(0, 255, 0);
-rect(x2, y2, 200, h);
+rect(x2, 0, 200, PipeHeight);
+fill(0, 255, 0);
+rect(x2, PipeHeight + gap, 200, height - (PipeHeight + gap));
 if(mousePressed){
   birdYVelocity = -15;
-
 }
 if(x2 < -300){
   x2 = 900;
-  int upperPipeHeight = (int) random(100, 400);
-  y2 = upperPipeHeight;
-  h = 1000 - y2;
+  PipeHeight = random(0, 200);
+  y2 = PipeHeight;
+  gap = random(100, 300);
 }
+//
 //3. In your draw method, set a background, and draw a ball (bird) on the screen.
 
 //4. Make the bird fall down
