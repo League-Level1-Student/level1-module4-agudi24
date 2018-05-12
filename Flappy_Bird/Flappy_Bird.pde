@@ -9,31 +9,37 @@ float x3 = 0;
 float y3 = 200;
 float h = 200;
 float birdYVelocity = 0;
-float gravity = 0.5;
+float gravity = 0.9;
 float xd = 300;
 float h2;
 float PipeHeight;
 float gap = random(100, 200);
+int score = 0;
 //1. Start a new sketch with draw and setup methods.
 void setup(){
   minim = new Minim (this);
-//sound = minim.loadSample("flap.mp3", 128);
-int screenLength = 600;
-size(1000, 600);
+  sound = minim.loadSample("flap.wav", 128);
+  size(1000, 600);
 }
+
+
 //2. Set your canvas size in the setup method
 void draw(){
 background(0, 0, 255);
 fill(255, 0, 0);
 ellipse(x, y, 40, 40);
 fill(0, 255, 0);
+
 x2=x2-11;
 birdYVelocity += gravity;
 y += birdYVelocity;
 fill(0, 255, 0);
+//rect(x2, 0, 200, 100);
 rect(x2, 0, 200, PipeHeight);
 fill(0, 255, 0);
-rect(x2, PipeHeight + gap, 200, height - (PipeHeight + gap));
+rect(x2, PipeHeight + (gap*1.5), 200, height - (PipeHeight + gap));
+text("Score:" + score, 200, 200);
+textSize(20);
 if(mousePressed){
   birdYVelocity = -15;
 }
@@ -42,7 +48,38 @@ if(x2 < -300){
   PipeHeight = random(0, 200);
   y2 = PipeHeight;
   gap = random(100, 300);
+  sound.trigger();
+  score++;
+
+
 }
+
+boolean intersectsPipes() { 
+    if (y < PipeHeight && x > x2 && x < (x+200)){
+         return true; }
+     else if (y>height - (PipeHeight + gap) && x > x2 && x < (x+200)) {
+         return true; }
+     else { return false; }
+     
+     
+if(y > 200 || y < 400){
+  //System.exit(0);
+  println("hi");
+}
+else{
+  println("bye");
+}
+
+if(y > 600 || y < 0){
+  System.exit(0);
+
+}
+}
+
+
+
+
+
 //
 //3. In your draw method, set a background, and draw a ball (bird) on the screen.
 
@@ -92,13 +129,7 @@ if(x2 < -300){
 //lowerY = upperY + upperPipeHeight + pipeGap;
 //15. Make the game end when the bird hits the pipe. Figure it out by yourself, or use this method:
 
-//boolean intersectsPipes() { 
-    // if (birdY < upperPipeHeight && birdX > pipeX && birdX < (pipeX+pipeWidth)){
-  //        return true; }
-     //else if (birdY>lowerPipeTop && birdX > pipeX && birdX < (pipeX+pipeWidth)) {
-     //     return true; }
-   //  else { return false; }
-//}
+
 
 //16. End the game when the bird hits the ground.
    //  Make a rectangle for the ground.
@@ -114,4 +145,3 @@ if(x2 < -300){
 
 //sound.trigger();
 //in mouseReleased() method (when the bird flaps)
-}
