@@ -6,39 +6,62 @@
 
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 import javax.imageio.ImageIO;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 public class MagicBox extends JPanel implements Runnable, MouseListener {
-
+	//BufferedImage backgroundImage;
+	
+	
 	/*
 	 * Work together as a TEAM of 2 or 3 to make this project. We are going to hide secrets within the magic box. 
 	 * When the user clicks on a secret place, stuff will happen.
 	 * 
 	 * 1. Make the frame respond to mouse clicks.
+	 *
+	 *public JLabel loadImageFromTheInternet(String imageURL) throws MalformedURLException {
+		URL url = new URL(imageURL);
+		Icon icon = new ImageIcon(url);
+		return new JLabel(icon);
+	}
+
 	 * 
 	 * 2. When the mouse is clicked, use the Media Palace (bit.ly/media-palace) to play sounds, show images or speak.
 	 * 
+	 * 
 	 * 3. backgroundImage.getRGB(keyEvent.getX(), keyEvent.getY()) will give you the color of the current pixel.
 	 */
-
-	BufferedImage backgroundImage;
+MagicBox(){
+	run();
+}
 
 	public static void main(String[] args) throws Exception {
 		SwingUtilities.invokeLater(new MagicBox());
-	
-		
-		
+		MagicBox box = new MagicBox();
+		box.loadImageFromTheInternet("image.jpg");
+		box.loadBackgroundImage();
 	}
-
+	
+	public JLabel loadImageFromTheInternet(String imageURL) throws MalformedURLException {
+		URL url = new URL(imageURL);
+		Icon icon = new ImageIcon(url);
+		return new JLabel(icon);
+	}
 	@Override
 	public void run() {
 		try {
@@ -51,6 +74,7 @@ public class MagicBox extends JPanel implements Runnable, MouseListener {
 
 	private void createUI() {
 		JFrame frame = new JFrame("The Magic Box contains many secrets...");
+		frame.addMouseListener(this);
 		frame.add(this);
 		setPreferredSize(new Dimension(backgroundImage.getWidth(), backgroundImage.getHeight()));
 		frame.pack();
@@ -75,18 +99,19 @@ public class MagicBox extends JPanel implements Runnable, MouseListener {
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void mousePressed(MouseEvent e) {
 		// TODO Auto-generated method stub
+		System.out.println("clicked");
 		
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		// TODO Auto-generated method stub
+		System.out.println("released");
 		
 	}
 

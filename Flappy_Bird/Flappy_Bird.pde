@@ -15,7 +15,7 @@ float xd = 300;
 float h2;
 float PipeHeight;
 float gap = random(100, 300);
-int score = 6;
+int score = 0;
 int hscore = 0;
 //1. Start a new sketch with draw and setup methods.
 void setup() {
@@ -55,19 +55,16 @@ void draw() {
     sound.trigger();
     score++;
   }
-  if (y > 600 || y < 0) {
-    System.exit(0);
-  }
 
-  if (x > x2 && x < x2 + 200 && y > PipeHeight + (gap*1.5)) {
+
+  if (y > 600 || y < 0||x > x2 && x < x2 + 200 && y > PipeHeight + (gap*1.5) || x > x2 && x < x2 + 200 && y < PipeHeight) {
     println("Game over! Your score was: " + score);
     int hscore = Integer.parseInt(highScore);
+    println("The old high score was " + hscore);
     if (score > hscore) {
-      writeHighScore(hscore);
+      println("writing high score");
+      writeHighScore(score);
     }
-    System.exit(0);
-  } else if (x > x2 && x < x2 + 200 && y < PipeHeight) {
-    println("Game over! Your score was: " + score);
     System.exit(0);
   }
 }
@@ -89,7 +86,7 @@ void readHighScore() {
 } 
 
 void writeHighScore(int myscore) {
-  output = createWriter("score.txt");
+  output = createWriter("./data/score.txt");
   output.println(myscore);
   output.flush(); // Writes the remaining data to the file
   output.close(); // Finishes the file
