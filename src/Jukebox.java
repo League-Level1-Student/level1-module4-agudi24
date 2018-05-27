@@ -4,6 +4,9 @@
  */
 
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseListener;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
@@ -11,7 +14,10 @@ import java.net.URL;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 import javazoom.jl.player.advanced.AdvancedPlayer;
@@ -19,14 +25,38 @@ import javazoom.jl.player.advanced.AdvancedPlayer;
 /* 1. Download the JavaZoom jar from here: http://bit.ly/javazoom
  * 2. Right click your project and add it as an External JAR (Under Java Build Path > Libraries).*/
 
-public class Jukebox implements Runnable {
+public class Jukebox implements Runnable, ActionListener {
 
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(new Jukebox());
+
 	}
-
+	private JButton button;
+	String song = "eyeofthetiger.mp3";
+	
            public void run() {
-
+        	   JFrame frame = new JFrame("Adi's Jukebox");
+        	   String image = "picture.jpg";
+        	   frame.setVisible(true);
+        	   button = new JButton("Click on me to play a song!");
+        	   button.addActionListener(this);
+        	   frame.add(button);
+        	   JPanel panel = new JPanel();
+        	   panel.add(loadImage(image));
+        	   //frame.pack();
+        	   frame.add(panel);
+        	   panel.add(button);
+        	   frame.pack();
+           }
+           
+        	   @Override
+        		public void actionPerformed(ActionEvent arg0) {
+        			JButton buttonPressed = (JButton) arg0.getSource();
+        			if(buttonPressed == button) {
+        			Song tiger = new Song(song);
+        			tiger.play();
+        	   }
+        	   }
 		// 3. Find an mp3 on your computer or on the Internet.
 		// 4. Create a Song
 
@@ -39,7 +69,7 @@ public class Jukebox implements Runnable {
 		 * cover is clicked, stop the currently playing song, and play the one
 		 * that was selected.
 		 */
-          }
+          
 	/* Use this method to add album covers to your Panel. */
 	private JLabel loadImage(String fileName) {
 		URL imageURL = getClass().getResource(fileName);
