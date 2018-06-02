@@ -21,11 +21,12 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 public class MagicBox extends JPanel implements Runnable, MouseListener {
-	//BufferedImage backgroundImage;
+	BufferedImage backgroundImage;
 	
 	
 	/*
@@ -44,11 +45,13 @@ public class MagicBox extends JPanel implements Runnable, MouseListener {
 	 * 2. When the mouse is clicked, use the Media Palace (bit.ly/media-palace) to play sounds, show images or speak.
 	 * 
 	 * 
-	 * 3. backgroundImage.getRGB(keyEvent.getX(), keyEvent.getY()) will give you the color of the current pixel.
-	 */
+	 * */
+	 
 MagicBox(){
 	run();
 }
+
+
 
 	public static void main(String[] args) throws Exception {
 		SwingUtilities.invokeLater(new MagicBox());
@@ -104,14 +107,27 @@ MagicBox(){
 	@Override
 	public void mousePressed(MouseEvent e) {
 		// TODO Auto-generated method stub
-		System.out.println("clicked");
-		
+		int mouseX = e.getX();
+		int mouseY = e.getY();
+		System.out.println("X: " + mouseX + " Y: " + mouseY);
+		if(mouseX > 193 && mouseX < 202 && mouseY > 528 && mouseY < 563) {
+			JOptionPane.showMessageDialog(null, "Hint: I am looking for my friend");
+		}
+		else if(mouseX > 305 && mouseX < 365 && mouseY > 545 && mouseY < 580) {
+			JOptionPane.showMessageDialog(null, "The secret is that there is no secret.");
+		}
+		else if(mouseX > 170 && mouseX < 193 && mouseY > 847 && mouseY < 880) {
+			JOptionPane.showMessageDialog(null, "Hint: I would like to go on a waterslide");
+		}
+		else {
+			System.out.println("there is nothing here");
+		}
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		// TODO Auto-generated method stub
-		System.out.println("released");
+		//System.out.println("released");
 		
 	}
 
